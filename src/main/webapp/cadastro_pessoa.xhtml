@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="template/default_layout.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Cadastrar Pessoa</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="nome">Nome</label>
+                    <h:inputText value="#{controladorCadastroPessoa.pessoa.nome}" id="nome" name="nome" type="text" placeholder="Nome" class="form-control input-md" required="true" />
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="sobrenome">Sobrenome</label>
+                    <h:inputText value="#{controladorCadastroPessoa.pessoa.sobrenome}" id="sobrenome" name="sobrenome" type="text" placeholder="Sobrenome" class="form-control input-md" required="true"/>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="sobrenome">Data de Nascimento</label>
+                    <h:inputText value="#{controladorCadastroPessoa.pessoa.dataNascimento}" id="dataNascimento"
+                                 name="dataNascimento" type="text" placeholder="Sobrenome"
+                                 class="form-control input-md" required="true">
+                        <f:converter converterId="dateConversor" />
+                    </h:inputText>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="sobrenome">CPF</label>
+                    <h:inputText value="#{controladorCadastroPessoa.pessoa.cpf}" id="cpf"
+                                 name="cpf" type="text" placeholder="Sobrenome"
+                                 class="form-control input-md" required="true">
+                        <f:validator validatorId="cpfValidador" />
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:commandButton action="#{controladorCadastroPessoa.cadastrar}" value="Cadastrar" />
+                </div>
+
+            </fieldset>
+        </h:form>
+        <hr/>
+        <h:dataTable value="#{controladorCadastroPessoa.listar()}" var="pessoa" styleClass="table table-striped">
+            <h:column>
+                <f:facet name="header">Nome</f:facet>
+                #{pessoa.nome}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Sobrenome</f:facet>
+                #{pessoa.sobrenome}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data de Nascimento</f:facet>
+                <h:outputText value="#{pessoa.dataNascimento}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">CPF</f:facet>
+                #{pessoa.cpf}
+            </h:column>
+
+        </h:dataTable>
+    </ui:define>
+</ui:composition>
+</html>
